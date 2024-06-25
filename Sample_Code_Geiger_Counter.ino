@@ -10,6 +10,8 @@
   @https://github.com/DFRobot/DFRobot_Geiger
 */
 
+// Edited by Tyler, Calvin, Isaac, and James
+
 #include <DFRobot_Geiger.h>
 #if defined ESP32
 #define detect_pin D3

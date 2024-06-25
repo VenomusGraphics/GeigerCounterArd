@@ -26,7 +26,7 @@ DFRobot_Geiger  geiger(detect_pin);
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   //Start counting, enable external interrupt
   geiger.start();
 }

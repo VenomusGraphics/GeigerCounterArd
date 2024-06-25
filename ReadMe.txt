@@ -1,6 +1,7 @@
 Enter all new info used for the the project in here only.
 https://github.com/cdjq/DFRobot_Geiger/tree/main
 https://github.com/adafruit/Adafruit_BMP280_Library
+https://learn.adafruit.com/adafruit-bmp280-barometric-pressure-plus-temperature-sensor-breakout/arduino-test
 
 During normal operation, high voltage is added at both ends of the Geiger tube, and the Geiger tube itself is equivalent to an open circuit.
 When a high-energy particle is injected into the Geiger tube, the particle energy ionizes the gas in the tube and discharges it.

@@ -97,17 +97,17 @@ void loop() {
   logfile.print("nSv/h:");
   logfile.println(geiger.getnSvh());
   
-  if (geiger.getnSvh > 1000000000) {
+  if (geiger.getnSvh() > 1000000000) {
     digitalWrite(red, HIGH);
     digitalWrite(yellow, LOW);
     digitalWrite(green, LOW);
   }
-  else if (geiger.getnSvh > 1020000) {
+  else if (geiger.getnSvh() > 1020000) {
     digitalWrite(yellow, HIGH);
     digitalWrite(red, LOW);
     digitalWrite(green, LOW);
   }
-  else if (geiger.getnSvh > 10000) {
+  else if (geiger.getnSvh() > 10000) {
     digitalWrite(green, HIGH);
     digitalWrite(red, LOW);
     digitalWrite(yellow, LOW);

@@ -55,6 +55,10 @@ const int SD_PIN = 10;
 int count = 0;
 File logfile;
 
+int red = 5;
+int yellow = 6;
+int green = 7;
+
 void setup()
 {
   Serial.begin(9600);
@@ -86,11 +90,33 @@ void loop() {
   Serial.println(geiger.getCPM());
   logfile.print("CPM:");
   logfile.println(geiger.getCPM());
+  
   //Get the current nSv/h, if it has been paused, nSv/h is the last value before the pause
   Serial.print("nSv/h:");
   Serial.println(geiger.getnSvh());
   logfile.print("nSv/h:");
   logfile.println(geiger.getnSvh());
+  
+  if (geiger.getnSvh > 1000000000) {
+    digitalWrite(red, HIGH);
+    digitalWrite(yellow, LOW);
+    digitalWrite(green, LOW);
+  }
+  else if (geiger.getnSvh > 1020000) {
+    digitalWrite(yellow, HIGH);
+    digitalWrite(red, LOW);
+    digitalWrite(green, LOW);
+  }
+  else if (geiger.getnSvh > 10000) {
+    digitalWrite(green, HIGH);
+    digitalWrite(red, LOW);
+    digitalWrite(yellow, LOW);
+  }
+  else {
+    digitalWrite(red, LOW);
+    digitalWrite(yellow, LOW);
+    digitalWrite(green, LOW);
+  }
   //Get the current μSv/h, if it has been paused, the μSv/h is the last value before the pause
   Serial.print("uSv/h:");
   Serial.println(geiger.getuSvh());

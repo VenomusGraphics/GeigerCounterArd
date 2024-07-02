@@ -18,6 +18,8 @@
 #include <SPI.h>
 #include <Adafruit_BME280.h>
 
+Adafruit_BME280 bme; // use I2C interface
+Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 
 #include <DFRobot_Geiger.h>
 #if defined ESP32

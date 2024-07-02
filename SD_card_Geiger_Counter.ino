@@ -10,6 +10,25 @@
   @https://github.com/DFRobot/DFRobot_Geiger
 */
 
+/***************************************************************************
+  This is a library for the BME280 humidity, temperature & pressure sensor
+  This example shows how to take Sensor Events instead of direct readings
+  
+  Designed specifically to work with the Adafruit BME280 Breakout
+  ----> http://www.adafruit.com/products/2652
+
+  These sensors use I2C or SPI to communicate, 2 or 4 pins are required
+  to interface.
+
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing products
+  from Adafruit!
+
+  Written by Limor Fried & Kevin Townsend for Adafruit Industries.
+  BSD license, all text above must be included in any redistribution
+ ***************************************************************************/
+
+
 // Edited by Tyler, Calvin, Isaac, and James
 
 #include <SD.h> //Library for SD card reading

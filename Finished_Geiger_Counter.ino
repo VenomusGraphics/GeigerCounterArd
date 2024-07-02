@@ -136,6 +136,8 @@ void loop() {
   Serial.println();
   logfile.println();
 
+  count++;
+
   if (count > 20) {
     logfile.close();
     logfile = open_next_logfile();

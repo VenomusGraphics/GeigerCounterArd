@@ -52,7 +52,10 @@ Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 */
 DFRobot_Geiger  geiger(detect_pin);
 const int SD_PIN = 10;
+
 int count = 0;
+int N = 15;
+
 File logfile;
 
 int red = 5;
@@ -79,69 +82,70 @@ void setup()
 
 void loop() {
 
-  //Start counting, enable external interrupt
-  //geiger.start();
-  delay(3000);
-  //Pause the count, turn off the external interrupt trigger, the CPM and radiation intensity values remain in the state before the pause
-  //geiger.pause();
-  //Get the current CPM, if it has been paused, the CPM is the last value before the pause
-  //Predict CPM by falling edge pulse within 3 seconds, the error is ±3CPM
-  Serial.print("CPM:");
-  Serial.println(geiger.getCPM());
-  logfile.print("CPM:");
-  logfile.println(geiger.getCPM());
+  if (count < N) {
+    //Start counting, enable external interrupt
+    //geiger.start();
+    delay(3000);
+    //Pause the count, turn off the external interrupt trigger, the CPM and radiation intensity values remain in the state before the pause
+    //geiger.pause();
+    //Get the current CPM, if it has been paused, the CPM is the last value before the pause
+    //Predict CPM by falling edge pulse within 3 seconds, the error is ±3CPM
+    Serial.print("CPM:");
+    Serial.println(geiger.getCPM());
+    logfile.print("CPM:");
+    logfile.println(geiger.getCPM());
+    
+    //Get the current nSv/h, if it has been paused, nSv/h is the last value before the pause
+    Serial.print("nSv/h:");
+    Serial.println(geiger.getnSvh());
+    logfile.print("nSv/h:");
+    logfile.println(geiger.getnSvh());
+    
+    if (geiger.getnSvh() > 1000000000) {
+      digitalWrite(red, HIGH);
+      digitalWrite(yellow, LOW);
+      digitalWrite(green, LOW);
+    }
+    else if (geiger.getnSvh() > 1020000) {
+      digitalWrite(yellow, HIGH);
+      digitalWrite(red, LOW);
+      digitalWrite(green, LOW);
+    }
+    else if (geiger.getnSvh() > 10) {
+      digitalWrite(green, HIGH);
+      digitalWrite(red, LOW);
+      digitalWrite(yellow, LOW);
+    }
+    else {
+      digitalWrite(red, LOW);
+      digitalWrite(yellow, LOW);
+      digitalWrite(green, LOW);
+    }
+    //Get the current μSv/h, if it has been paused, the μSv/h is the last value before the pause
+    Serial.print("uSv/h:");
+    Serial.println(geiger.getuSvh());
+    logfile.print("uSv/h:");
+    logfile.println(geiger.getuSvh());
   
-  //Get the current nSv/h, if it has been paused, nSv/h is the last value before the pause
-  Serial.print("nSv/h:");
-  Serial.println(geiger.getnSvh());
-  logfile.print("nSv/h:");
-  logfile.println(geiger.getnSvh());
+    sensors_event_t temp_event, pressure_event, humidity_event;
+    bme_pressure->getEvent(&pressure_event);
   
-  if (geiger.getnSvh() > 1000000000) {
-    digitalWrite(red, HIGH);
-    digitalWrite(yellow, LOW);
-    digitalWrite(green, LOW);
-  }
-  else if (geiger.getnSvh() > 1020000) {
-    digitalWrite(yellow, HIGH);
-    digitalWrite(red, LOW);
-    digitalWrite(green, LOW);
-  }
-  else if (geiger.getnSvh() > 10) {
-    digitalWrite(green, HIGH);
-    digitalWrite(red, LOW);
-    digitalWrite(yellow, LOW);
+    Serial.print(F("Pressure = "));
+    logfile.print(F("Pressure = "));
+    Serial.print(pressure_event.pressure);
+    logfile.print(pressure_event.pressure);
+    Serial.println(" hPa");
+    logfile.println(" hPa");
+  
+    Serial.println();
+    logfile.println();
+    delay(1000)
+    count++;
   }
   else {
-    digitalWrite(red, LOW);
-    digitalWrite(yellow, LOW);
-    digitalWrite(green, LOW);
-  }
-  //Get the current μSv/h, if it has been paused, the μSv/h is the last value before the pause
-  Serial.print("uSv/h:");
-  Serial.println(geiger.getuSvh());
-  logfile.print("uSv/h:");
-  logfile.println(geiger.getuSvh());
-
-  sensors_event_t temp_event, pressure_event, humidity_event;
-  bme_pressure->getEvent(&pressure_event);
-
-  Serial.print(F("Pressure = "));
-  logfile.print(F("Pressure = "));
-  Serial.print(pressure_event.pressure);
-  logfile.print(pressure_event.pressure);
-  Serial.println(" hPa");
-  logfile.println(" hPa");
-
-  Serial.println();
-  logfile.println();
-
-  count++;
-
-  if (count > 20) {
     logfile.close();
-    logfile = open_next_logfile();
     count = 0;
+    logfile = open_next_logfile();
   }
 }
 

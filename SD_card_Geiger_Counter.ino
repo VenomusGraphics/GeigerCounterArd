@@ -14,6 +14,11 @@
 
 #include <SD.h> //Library for SD card reading
 
+#include <Wire.h>
+#include <SPI.h>
+#include <Adafruit_BME280.h>
+
+
 #include <DFRobot_Geiger.h>
 #if defined ESP32
 #define detect_pin D3

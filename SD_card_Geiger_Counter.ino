@@ -78,6 +78,19 @@ void loop() {
   logfile.print("uSv/h:");
   logfile.println(geiger.getuSvh());
 
+  sensors_event_t temp_event, pressure_event, humidity_event;
+  bme_pressure->getEvent(&pressure_event);
+
+  Serial.print(F("Pressure = "));
+  logfile.print(F("Pressure = "));
+  Serial.print(pressure_event.pressure);
+  logfile.print(pressure_event.pressure);
+  Serial.println(" hPa");
+  logfile.println(" hPa");
+
+  Serial.println();
+  logfile.println();
+
   if (count > 20) {
     logfile.close();
     logfile = open_next_logfile();

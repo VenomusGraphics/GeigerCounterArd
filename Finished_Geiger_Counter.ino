@@ -107,7 +107,7 @@ void loop() {
     digitalWrite(red, LOW);
     digitalWrite(green, LOW);
   }
-  else if (geiger.getnSvh() > 10000) {
+  else if (geiger.getnSvh() > 10) {
     digitalWrite(green, HIGH);
     digitalWrite(red, LOW);
     digitalWrite(yellow, LOW);

@@ -35,6 +35,7 @@ DFRobot_Geiger  geiger(detect_pin);
 const int SD_PIN = 10;
 int count = 0;
 File logfile;
+
 void setup()
 {
   Serial.begin(9600);
@@ -42,6 +43,15 @@ void setup()
   geiger.start();
   init_SD();
   logfile = open_next_logfile();
+
+  Serial.println(F("BME280 Sensor event test"));
+
+  if (!bme.begin()) {
+    Serial.println(F("Could not find a valid BME280 sensor, check wiring!"));
+    while (1) delay(10);
+  }
+  
+  bme_pressure->printSensorDetails();
 }
 
 void loop() {

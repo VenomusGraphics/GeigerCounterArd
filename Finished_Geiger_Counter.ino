@@ -139,7 +139,7 @@ void loop() {
   
     Serial.println();
     logfile.println();
-    delay(1000)
+    delay(1000);
     count++;
   }
   else {

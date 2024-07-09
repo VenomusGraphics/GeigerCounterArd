@@ -126,8 +126,8 @@ void loop() {
     Serial.println();
     logfile.println();
     delay(1000);
-    count++;
-  } else {
+    count++;} 
+  else {
     logfile.close();
     count = 0;
     logfile = open_next_logfile();
